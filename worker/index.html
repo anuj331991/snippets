@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        document
+          .querySelectorAll("button")[0]
+          .addEventListener("click", (e) => {
+            e.stopPropagation();
+            alert(1);
+          });
+        document.getElementById("lol").addEventListener("click", (e) => {
+          e.stopImmediatePropagation();
+          alert(1);
+        });
+        document
+          .querySelectorAll("button")[0]
+          .addEventListener("click", (e) => {
+            alert(2);
+          });
+        document.getElementById("lol").addEventListener("click", (e) => {
+          alert(2);
+        });
+      };
+    </script>
+
+    lolooo
+
+    <div onclick="alert(3)">
+      <button>1...2</button>
+      <button id="lol">1</button>
+    </div>
+  </body>
+</html>
