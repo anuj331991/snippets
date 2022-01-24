@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Search Name: <input type="text" name="" id="search" />
+
+    <button id="hit">Hit API</button>
+  </body>
+  <script>
+    let search = document.getElementById("search");
+
+    let timer;
+    // Debounce trigger a function only when user does not carry out event in specific time frame
+    const debounce = (callback, time) => {
+      clearTimeout(timer);
+      timer = setTimeout(callback, time);
+    };
+
+    let pause;
+    //Throttle trigger a function in specific time interval
+    const throttle = (callback, time) => {
+      if (pause) return; //return if pause is true
+      pause = true;
+      setTimeout(() => {
+        callback();
+        pause = false;
+      }, time);
+    };
+
+    let hit = document.getElementById("hit");
+    hit.addEventListener("click", () => {
+      console.log("hit clicked");
+      throttle(() => hitRequest("hit"), 500);
+    });
+    search.addEventListener("keyup", (e) => {
+      debounce(() => hitRequest(e.target.value), 1000);
+    });
+
+    function hitRequest(seacrhParam) {
+      console.log(`Search Param: ${seacrhParam}`);
+    }
+  </script>
+</html>
