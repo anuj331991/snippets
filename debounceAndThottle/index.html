@@ -21,6 +21,14 @@
       timer = setTimeout(callback, time);
     };
 
+    const debounceIt = (callback, delay) => {
+      let timer;
+      return function () {
+        clearTimeout(timer);
+        timer = setTimeout(callback, delay);
+      };
+    };
+
     let pause;
     //Throttle trigger a function in specific time interval
     const throttle = (callback, time) => {
@@ -33,13 +41,20 @@
     };
 
     let hit = document.getElementById("hit");
+    let betterFunction = debounceIt(getData, 500);
+
     hit.addEventListener("click", () => {
       console.log("hit clicked");
       throttle(() => hitRequest("hit"), 500);
     });
     search.addEventListener("keyup", (e) => {
-      debounce(() => hitRequest(e.target.value), 1000);
+      //debounce(() => hitRequest(e.target.value), 1000);
+      betterFunction();
     });
+
+    function getData() {
+      console.log("fetching data....");
+    }
 
     function hitRequest(seacrhParam) {
       console.log(`Search Param: ${seacrhParam}`);

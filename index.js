@@ -1,19 +1,3 @@
-function pizza() {
-  this.name = "margeritta";
-}
-let obj = new pizza();
-pizza.prototype.random = 23223;
-// console.log(obj);
-console.log(obj);
-// console.log(pizza.prototype);
-
-let arr = [1, 2, 3];
-arr.__proto__.yummy = function () {
-  return "lol";
-};
-console.log(arr.__proto__);
-console.log(Array.prototype);
-
 console.log("===>>>Currrying starts");
 // function volume(length, width, height) {
 //   return length * width * height;
@@ -56,3 +40,67 @@ function deepClone(obj) {
 }
 
 console.log("Custom deep clone<<<====");
+
+console.log("===>>Flatten array");
+
+let arr1 = [1, [2, 3]];
+
+function flatArray(arr) {
+  var result = [];
+  arr.forEach((element, index) => {
+    if (Array.isArray(element)) {
+      result = result.concat(flatArray(element));
+    } else {
+      result.push(element);
+    }
+  });
+  return result;
+}
+console.log(flatArray(arr1));
+
+console.log("<<<====Flatten array");
+
+console.log("====>>diff finder");
+
+let obj1 = {
+  name: "anuj",
+  address: {
+    location: {
+      complete: {
+        pin: "110027",
+      },
+      area: {
+        land: 234,
+      },
+    },
+  },
+};
+
+let obj2 = {
+  name: "anuj",
+  address: {
+    location: {
+      complete: {
+        pin: "110027",
+      },
+      area: {
+        land: 235,
+      },
+    },
+  },
+};
+
+function diffFinder(obj1, obj2) {
+  var result = {};
+  for (let key in obj1) {
+    if (obj1[key] && typeof obj1[key] === "object") {
+      result[key] = diffFinder(obj1[key], obj2[key]);
+    } else if (obj1[key] && obj1[key] !== obj2[key]) {
+      result[key] = obj1[key];
+    }
+  }
+  return result;
+}
+let diff = diffFinder(obj1, obj2);
+console.log(diff);
+console.log("<<<==== diff finder");
