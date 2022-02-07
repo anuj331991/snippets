@@ -2,14 +2,16 @@ var a = 1;
 function x() {
   var a = 2;
   function y() {
-    console.log(a); //2
+    console.log(a); //undefnined
     a++;
-    console.log(a); //3
-    //a = 8;
+    console.log(a); //NaN
+    a = 8;
+    console.log(a); //8
+    var a = 10;
   }
 
   y();
-  console.log(a);
+  console.log(a); //2
 }
 x();
 console.log(a); //1
@@ -23,8 +25,19 @@ let obj = {
     console.log(this);
   },
 };
+
 obj.function1();
 obj.function2();
+
+var bunny = {
+  name: "Usagi",
+  tasks: ["transform", "eat cake", "blow kisses"],
+  showTasks: function () {
+    this.tasks.forEach(function (task) {
+      alert(this.name + " wants to " + task);
+    });
+  },
+};
 
 const sum = function (a) {
   return function (b) {

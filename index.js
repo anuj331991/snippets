@@ -1,7 +1,10 @@
-console.log("===>>>Currrying starts");
-// function volume(length, width, height) {
-//   return length * width * height;
-// }
+/**
+ * ====== CURRING STARTS HERE======
+ */
+
+function simpleVolume(length, width, height) {
+  return length * width * height;
+}
 function volume(length) {
   return function (width) {
     return function (height) {
@@ -10,10 +13,27 @@ function volume(length) {
   };
 }
 console.log("Volume", volume(1)(2)(3));
-console.log("Currrying ends<<<====");
 
-console.log("===>>>Custom deep clone");
+recursiveVolume(1)(2)(3)(4)();
 
+function recursiveVolume(a) {
+  return function (b) {
+    if (b) {
+      return recursiveVolume(a * b);
+    }
+    return a;
+  };
+}
+
+console.log("recursiveVolume", recursiveVolume(1)(2)(3)(4)());
+
+/**
+ * ====== CURRING ENDS HERE======
+ */
+
+/**
+ *  ====== DEEP CLONE STARTS HERE =====
+ */
 let nestedObject = {
   a: 3,
   b: {
@@ -39,9 +59,13 @@ function deepClone(obj) {
   return clone;
 }
 
-console.log("Custom deep clone<<<====");
+/**
+ *  ====== DEEP CLONE ENDS HERE =====
+ */
 
-console.log("===>>Flatten array");
+/**
+ *  ====== FLAT ARRAY STARTS HERE =====
+ */
 
 let arr1 = [1, [2, 3]];
 
@@ -56,11 +80,56 @@ function flatArray(arr) {
   });
   return result;
 }
-console.log(flatArray(arr1));
 
-console.log("<<<====Flatten array");
+/**
+ *  ====== FLAT ARRAY ENDS HERE =====
+ */
 
-console.log("====>>diff finder");
+/**
+ *  ====== FLAT OBJECT STARTS HERE =====
+ */
+let obj = {
+  name: "Anuj",
+  address: {
+    personal: {
+      city: "delhi",
+      state: "Delhi",
+    },
+    office: {
+      city: "gurgaon",
+      state: "haryana",
+    },
+  },
+};
+
+let output = {
+  user_name: "Anuj",
+  user_address_personal_city: "Delhi",
+  user_address_personal_state: "delhi",
+  user_address_office_city: "gurgaon",
+  user_address_office_state: "haryana",
+};
+
+let finalObj = {};
+function flatObj(inputObj, parent) {
+  for (let key in inputObj) {
+    if (typeof inputObj[key] === "object") {
+      flatObj(inputObj[key], `${parent}.${key}`);
+    } else {
+      finalObj[`${parent}.${key}`] = inputObj[key];
+    }
+  }
+  return finalObj;
+}
+let result = flatObj(obj, "user");
+console.log(result);
+/**
+ *  ====== FLAT OBJECT ENDS HERE =====
+ */
+
+/**
+ *  ====== DIFF FINDER STARTS HERE =====
+ */
 
 let obj1 = {
   name: "anuj",
@@ -102,5 +171,7 @@ function diffFinder(obj1, obj2) {
   return result;
 }
 let diff = diffFinder(obj1, obj2);
-console.log(diff);
-console.log("<<<==== diff finder");
+console.log("diffFinder", diff);
+/**
+ *  ====== DIFF FINDER ENDS HERE =====
+ */
